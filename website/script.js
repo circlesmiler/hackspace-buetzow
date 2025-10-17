@@ -56,42 +56,148 @@ function toggleMobileMenu() {
     nav.classList.toggle('mobile-open');
 }
 
-// Update upcoming dates dynamically
-function updateUpcomingDates() {
+// Load upcoming dates from CSV file
+async function loadUpcomingDates() {
     const upcomingDatesContainer = document.querySelector('.upcoming-dates');
-    const currentDate = new Date();
-    const upcomingDates = [];
 
-    // Calculate next 3 last Wednesdays of upcoming months
-    for (let i = 0; i < 3; i++) {
-        const futureDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + i + 1, 0);
-        const lastWednesday = getLastWednesday(futureDate);
-        upcomingDates.push(lastWednesday);
+    // Check if container exists
+    if (!upcomingDatesContainer) {
+        console.warn('upcoming-dates container not found');
+        return;
     }
 
-    // Update the HTML
-    upcomingDatesContainer.innerHTML = upcomingDates.map(date => `
-        <div class="upcoming-date">
-            <strong>${date.toLocaleDateString('de-DE', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-            })}</strong>
-            <span>19:00 Uhr</span>
+    try {
+        const response = await fetch('dates.csv');
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const csvText = await response.text();
+        console.log('CSV loaded successfully:', csvText);
+
+        // Parse CSV (skip header line)
+        const lines = csvText.trim().split('\n').slice(1);
+        const dates = lines.map(line => {
+            const [date, time, description] = line.split(',');
+            return { date: date.trim(), time: time.trim(), description: description.trim() };
+        });
+
+        // Filter future dates and take first 3
+        const currentDate = new Date();
+        const futureDates = dates.filter(dateObj => {
+            const [day, month, year] = dateObj.date.split('.');
+            const eventDate = new Date(year, month - 1, day);
+            return eventDate >= currentDate;
+        }).slice(0, 3);
+
+        console.log('Future dates found:', futureDates);
+
+        // Update the HTML
+        if (futureDates.length > 0) {
+            upcomingDatesContainer.innerHTML = futureDates.map(dateObj => `
+                <div class="upcoming-date">
+                    <strong>${formatDate(dateObj.date)}</strong>
+                    <span>${dateObj.time} Uhr</span>
+                </div>
+            `).join('');
+        } else {
+            // No future dates found, show message
+            upcomingDatesContainer.innerHTML = `
+                <div class="upcoming-date" style="text-align: center; opacity: 0.8;">
+                    <strong>📅 Keine kommenden Termine</strong>
+                    <span>Bitte dates.csv aktualisieren</span>
+                </div>
+            `;
+        }
+
+    } catch (error) {
+        console.warn('Could not load dates.csv:', error);
+        showDateError();
+    }
+}
+
+function formatDate(dateString) {
+    const [day, month, year] = dateString.split('.');
+    const date = new Date(year, month - 1, day);
+    return date.toLocaleDateString('de-DE', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    });
+}
+
+function showDateError() {
+    const upcomingDatesContainer = document.querySelector('.upcoming-dates');
+    console.log('Showing date loading error message...');
+
+    if (!upcomingDatesContainer) {
+        console.error('upcoming-dates container not found');
+        return;
+    }
+
+    upcomingDatesContainer.innerHTML = `
+        <div class="upcoming-date" style="text-align: center; opacity: 0.8;">
+            <strong>⚠️ Termine konnten nicht geladen werden</strong>
+            <span>Bitte dates.csv überprüfen</span>
         </div>
-    `).join('');
+    `;
+
+    console.log('Date error message displayed');
 }
 
-function getLastWednesday(date) {
-    const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    const day = lastDay.getDay();
-    const diff = day >= 3 ? day - 3 : day + 4;
-    return new Date(lastDay.getTime() - diff * 24 * 60 * 60 * 1000);
+// Embedded dates as backup (update these when CSV changes)
+const embeddedDates = [
+    { date: '30.10.2025', time: '19:00', description: 'Monatliches Treffen' },
+    { date: '27.11.2025', time: '19:00', description: 'Monatliches Treffen' },
+    { date: '18.12.2025', time: '19:00', description: 'Jahresabschluss-Treffen' },
+    { date: '29.01.2026', time: '19:00', description: 'Neujahrs-Treffen' },
+    { date: '26.02.2026', time: '19:00', description: 'Monatliches Treffen' }
+];
+
+// Load dates with embedded backup
+function loadUpcomingDatesWithBackup() {
+    const upcomingDatesContainer = document.querySelector('.upcoming-dates');
+
+    if (!upcomingDatesContainer) {
+        console.warn('upcoming-dates container not found');
+        return;
+    }
+
+    // First try to load from CSV
+    loadUpcomingDates().catch(() => {
+        // If CSV fails, use embedded dates
+        console.log('Using embedded dates as backup');
+
+        const currentDate = new Date();
+        const futureDates = embeddedDates.filter(dateObj => {
+            const [day, month, year] = dateObj.date.split('.');
+            const eventDate = new Date(year, month - 1, day);
+            return eventDate >= currentDate;
+        }).slice(0, 3);
+
+        if (futureDates.length > 0) {
+            upcomingDatesContainer.innerHTML = futureDates.map(dateObj => `
+                <div class="upcoming-date">
+                    <strong>${formatDate(dateObj.date)}</strong>
+                    <span>${dateObj.time} Uhr</span>
+                </div>
+            `).join('');
+        } else {
+            // No future dates in embedded data
+            upcomingDatesContainer.innerHTML = `
+                <div class="upcoming-date" style="text-align: center; opacity: 0.8;">
+                    <strong>📅 Keine kommenden Termine</strong>
+                    <span>Bitte dates.csv aktualisieren</span>
+                </div>
+            `;
+        }
+    });
 }
 
-// Initialize dynamic dates when page loads
+// Initialize dates when page loads
 document.addEventListener('DOMContentLoaded', function() {
-    updateUpcomingDates();
+    loadUpcomingDatesWithBackup();
 });
 
 // Add some interactivity to contact methods
