@@ -15,12 +15,16 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // Add scroll effect to header
 window.addEventListener('scroll', function() {
     const header = document.querySelector('.header');
+    // Get CSS custom properties from the root element
+    const rootStyles = getComputedStyle(document.documentElement);
+    const bgWhite = rootStyles.getPropertyValue('--background-white').trim();
+
     if (window.scrollY > 100) {
-        header.style.background = 'rgba(255, 255, 255, 0.95)';
-        header.style.backdropFilter = 'blur(10px)';
+        header.style.background = `${bgWhite}f8`; // Add higher opacity (f8 = 97%)
+        header.style.backdropFilter = 'blur(15px)';
     } else {
-        header.style.background = '#ffffff';
-        header.style.backdropFilter = 'none';
+        header.style.background = `${bgWhite}f2`; // Add standard opacity (f2 = 95%)
+        header.style.backdropFilter = 'blur(10px)';
     }
 });
 
