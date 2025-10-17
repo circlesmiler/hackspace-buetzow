@@ -56,6 +56,46 @@ function toggleMobileMenu() {
     nav.classList.toggle('mobile-open');
 }
 
+// Update next meeting info in the main schedule card
+function updateNextMeetingInfo(nextDate) {
+    const dateDay = document.getElementById('next-meeting-date');
+    const meetingTitle = document.getElementById('next-meeting-title');
+    const meetingTime = document.getElementById('next-meeting-time');
+
+    if (nextDate && dateDay) {
+        const [day, month, year] = nextDate.date.split('.');
+        const date = new Date(year, month - 1, day);
+
+        // Update the date display
+        dateDay.innerHTML = `
+            <div class="date-day">${day}.${month}</div>
+            <div class="date-detail">${date.toLocaleDateString('de-DE', { year: 'numeric' })}</div>
+        `;
+
+        if (meetingTitle) {
+            meetingTitle.textContent = nextDate.description || 'Nächstes Treffen';
+        }
+
+        if (meetingTime) {
+            meetingTime.textContent = `⏰ ${nextDate.time} Uhr`;
+        }
+    } else {
+        // Fallback if no date available
+        if (dateDay) {
+            dateDay.innerHTML = `
+                <div class="date-day">?</div>
+                <div class="date-detail">Kein Termin</div>
+            `;
+        }
+        if (meetingTitle) {
+            meetingTitle.textContent = 'Termine in dates.csv';
+        }
+        if (meetingTime) {
+            meetingTime.textContent = '⏰ Siehe dates.csv';
+        }
+    }
+}
+
 // Load upcoming dates from CSV file
 async function loadUpcomingDates() {
     const upcomingDatesContainer = document.querySelector('.upcoming-dates');
@@ -83,19 +123,27 @@ async function loadUpcomingDates() {
             return { date: date.trim(), time: time.trim(), description: description.trim() };
         });
 
-        // Filter future dates and take first 3
+        // Filter future dates
         const currentDate = new Date();
         const futureDates = dates.filter(dateObj => {
             const [day, month, year] = dateObj.date.split('.');
             const eventDate = new Date(year, month - 1, day);
             return eventDate >= currentDate;
-        }).slice(0, 3);
+        });
 
         console.log('Future dates found:', futureDates);
 
-        // Update the HTML
+        // Update next meeting info (first future date)
         if (futureDates.length > 0) {
-            upcomingDatesContainer.innerHTML = futureDates.map(dateObj => `
+            updateNextMeetingInfo(futureDates[0]);
+        } else {
+            updateNextMeetingInfo(null);
+        }
+
+        // Update upcoming dates list (show next 3)
+        const upcomingList = futureDates.slice(0, 3);
+        if (upcomingList.length > 0) {
+            upcomingDatesContainer.innerHTML = upcomingList.map(dateObj => `
                 <div class="upcoming-date">
                     <strong>${formatDate(dateObj.date)}</strong>
                     <span>${dateObj.time} Uhr</span>
@@ -113,11 +161,10 @@ async function loadUpcomingDates() {
 
     } catch (error) {
         console.warn('Could not load dates.csv:', error);
+        updateNextMeetingInfo(null);
         showDateError();
     }
-}
-
-function formatDate(dateString) {
+}function formatDate(dateString) {
     const [day, month, year] = dateString.split('.');
     const date = new Date(year, month - 1, day);
     return date.toLocaleDateString('de-DE', {
