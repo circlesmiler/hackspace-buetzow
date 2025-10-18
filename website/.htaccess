@@ -1,6 +1,9 @@
 # Basic Security Headers for Apache/.htaccess
 # Compatible with most shared hosting providers
 
+# Set default charset for HTML files
+AddDefaultCharset UTF-8
+
 # Check if mod_headers is available before using Header directives
 <IfModule mod_headers.c>
     # Content Security Policy - prevents XSS attacks
@@ -16,7 +19,10 @@
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
-# Basic file type optimizations
+# Explicitly set Content-Type with charset for HTML files
+<IfModule mod_mime.c>
+    AddType "text/html; charset=UTF-8" .html
+</IfModule># Basic file type optimizations
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresByType text/css "access plus 1 month"
