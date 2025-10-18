@@ -1,0 +1,21 @@
+# Security Headers for Apache/.htaccess
+# Add this file to prevent XSS, clickjacking, and other attacks
+
+# Content Security Policy - prevents XSS attacks
+Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none';"
+
+# X-Frame-Options - prevents clickjacking
+Header always set X-Frame-Options "DENY"
+
+# X-Content-Type-Options - prevents MIME type sniffing
+Header always set X-Content-Type-Options "nosniff"
+
+# Referrer Policy - controls referrer information
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+# Permissions Policy - controls browser features
+Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+
+# Remove server signature
+ServerTokens Prod
+Header unset Server

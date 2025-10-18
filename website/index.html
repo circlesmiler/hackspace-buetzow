@@ -4,49 +4,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
     <title>hack:space Bützow - Technik, Wissen und Gemeinschaft</title>
+    <meta name="description" content="hack:space Bützow ist ein offener Raum für technikbegeisterte Menschen. Treffen, Diskussionen und Workshops zu Programmierung, Technologie und gesellschaftlichen Phänomenen in Bützow.">
+    <meta name="keywords" content="hackspace, bützow, programmierung, technologie, gemeinschaft, workshop, tech meetup, software development">
+    <meta name="author" content="André Schade">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph Tags for Social Media -->
+    <meta property="og:title" content="hack:space Bützow - Technik, Wissen und Gemeinschaft">
+    <meta property="og:description" content="Offener Raum für technikbegeisterte Menschen in Bützow. Regelmäßige Treffen im KaMa Café.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hackspace-buetzow.de/">
+    <meta property="og:image" content="https://hackspace-buetzow.de/og-image.jpg">
+    <meta property="og:locale" content="de_DE">
+
+    <!-- Local Business Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "hack:space Bützow",
+        "description": "Technikgemeinschaft für Programmierung und gesellschaftliche Technologie-Themen",
+        "url": "https://hackspace-buetzow.de/",
+        "email": "info@hackspace-buetzow.de",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Bützow",
+            "addressCountry": "DE"
+        },
+        "foundingDate": "2025",
+        "founder": {
+            "@type": "Person",
+            "name": "André Schade"
+        }
+    }
+    </script>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <!-- Header -->
-    <header class="header">
+    <header class="header" role="banner">
         <div class="container">
             <div class="header-content">
                 <div class="logo">
                     <h1 class="logo-main">hack:space</h1>
                     <p class="logo-sub">Bützow</p>
                 </div>
-                <nav class="nav">
-                    <a href="#about" class="nav-link">Über uns</a>
-                    <a href="#activities" class="nav-link">Aktivitäten</a>
-                    <a href="#schedule" class="nav-link">Termine</a>
-                    <a href="#contact" class="nav-link">Kontakt</a>
+                <nav class="nav" role="navigation" aria-label="Hauptnavigation">
+                    <a href="#about" class="nav-link" aria-label="Über uns Section">Über uns</a>
+                    <a href="#activities" class="nav-link" aria-label="Aktivitäten Section">Aktivitäten</a>
+                    <a href="#schedule" class="nav-link" aria-label="Termine Section">Termine</a>
+                    <a href="#contact" class="nav-link" aria-label="Kontakt Section">Kontakt</a>
                 </nav>
             </div>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h2 class="hero-title">Technik, Wissen und Gemeinschaft</h2>
-                <p class="hero-subtitle">Ein Ort für alle technikbegeisterten Menschen zum Austausch über
-                    Programmierung, Technologie und gesellschaftliche Phänomene.</p>
-                <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-primary">Kontakt aufnehmen</a>
-                    <a href="#schedule" class="btn btn-secondary">Nächste Termine</a>
+    <main>
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="container">
+                <div class="hero-content">
+                    <h2 id="hero-title" class="hero-title">Technik, Wissen und Gemeinschaft</h2>
+                    <p class="hero-subtitle">Ein Ort für alle technikbegeisterten Menschen zum Austausch über
+                        Programmierung, Technologie und gesellschaftliche Phänomene.</p>
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn btn-primary" aria-label="Kontaktformular öffnen">Kontakt aufnehmen</a>
+                        <a href="#schedule" class="btn btn-secondary" aria-label="Zu den Terminen springen">Nächste Termine</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="hero-image-container">
+                        <img src="hackspace-1.jpg" alt="Moderner Arbeitsbereich mit Computern und technischen Geräten im Hackspace Bützow" class="hero-photo" loading="eager" width="600" height="400">
+                        <div class="image-attribution" aria-label="Hinweis: Dieses Bild wurde mit künstlicher Intelligenz generiert">KI generiert</div>
+                    </div>
                 </div>
             </div>
-            <div class="hero-image">
-                <div class="hero-image-container">
-                    <img src="hackspace-1.jpg" alt="Hackspace Bützow - Unser Arbeitsbereich" class="hero-photo">
-                    <div class="image-attribution">KI generiert</div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
     <!-- About Section -->
     <section id="about" class="section">
@@ -116,7 +157,7 @@
                         <div class="schedule-info">
                             <h3 id="next-meeting-title">Nächstes Treffen</h3>
                             <p class="schedule-time" id="next-meeting-time">⏰ Wird geladen...</p>
-                            <p class="schedule-location">📍 Kama Café, Lange Straße, Bützow</p>
+                            <p class="schedule-location">📍 KaMa Café, Lange Straße, Bützow</p>
                             <p class="schedule-description">Unser regelmäßiges Treffen für alle Interessierten. Einfach
                                 vorbeikommen!</p>
                         </div>
@@ -144,7 +185,7 @@
                     <div class="contact-details">
                         <div class="contact-item">
                             <strong>📍 Ort:</strong>
-                            <p>Kama Café<br>Lange Straße<br>Bützow</p>
+                            <p>KaMa Café<br>Lange Straße<br>Bützow</p>
                         </div>
                         <div class="contact-item">
                             <strong>💰 Kosten:</strong>
@@ -173,18 +214,20 @@
         </div>
     </section>
 
+    </main>
+
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-main">
                     <h3>hack:space Bützow</h3>
                     <p>Technik, Wissen und Gemeinschaft in Bützow</p>
                 </div>
-                <div class="footer-legal">
+                <nav class="footer-legal" aria-label="Rechtliche Informationen">
                     <a href="impressum.html" class="footer-legal-link">Impressum</a>
                     <a href="datenschutz.html" class="footer-legal-link">Datenschutz</a>
-                </div>
+                </nav>
             </div>
         </div>
     </footer>

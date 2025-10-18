@@ -12,7 +12,7 @@ Eine moderne, DSGVO-konforme One-Page-Website für den Hackspace Bützow mit aut
 
 ### Live Website
 
-Die Website wird automatisch deployed nach: `https://your-domain.com/hackspace/`
+Die Website wird automatisch deployed nach: `https://hackspace-buetzow.de/`
 
 ## 📁 Projektstruktur
 

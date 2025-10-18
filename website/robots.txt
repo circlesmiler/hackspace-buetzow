@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://hackspace-buetzow.de/sitemap.xml
+
+# Disallow sensitive areas (none for this static site)
+# Disallow: /admin/
+# Disallow: /private/
