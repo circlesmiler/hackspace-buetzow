@@ -31,6 +31,23 @@
     src: url('fonts/Inter-Bold.woff2') format('woff2');
 }
 
+/* Monospace Font Face Declarations */
+@font-face {
+    font-family: 'Roboto Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('fonts/RobotoMono-Regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Roboto Mono';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('fonts/RobotoMono-Regular.woff2') format('woff2');
+}
+
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -107,11 +124,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .logo-main {
+    font-family: 'Roboto Mono', 'Courier New', 'Monaco', monospace;
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--accent-color);
     line-height: 1;
     margin: 0;
+    letter-spacing: -0.02em;
 }
 
 .logo-sub {
