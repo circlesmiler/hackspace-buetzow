@@ -1,6 +1,19 @@
 # Basic Security Headers for Apache/.htaccess
 # Compatible with most shared hosting providers
 
+# Force HTTPS redirect
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Redirect HTTP to HTTPS
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Redirect www to non-www (optional, adjust as needed)
+    RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+    RewriteRule ^(.*)$ https://%1%{REQUEST_URI} [L,R=301]
+</IfModule>
+
 # Set default charset for HTML files
 AddDefaultCharset UTF-8
 
