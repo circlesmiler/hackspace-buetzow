@@ -23,7 +23,7 @@ body {
     --text-medium: #b0b3b8;         /* Medium light text */
     --text-light: #8a8d91;
     --background-light: #2a2d30;    /* Dark background alternative */
-    --background-white: #1e2023;    /* Dark card background */
+    --surface-primary: #1e2023;     /* Primary surface/card background */
     --border-color: #404347;        /* Dark borders */
     --gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
 }
@@ -203,7 +203,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .about-card {
-    background: var(--background-white);
+    background: var(--surface-primary);
     padding: 2rem;
     border-radius: 12px;
     text-align: center;
@@ -240,7 +240,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .activity-item {
-    background: var(--background-white);
+    background: var(--surface-primary);
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -266,7 +266,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .schedule-card {
-    background: var(--background-white);
+    background: var(--surface-primary);
     border-radius: 12px;
     padding: 2rem;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -310,7 +310,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .schedule-upcoming {
-    background: var(--background-white);
+    background: var(--surface-primary);
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -387,7 +387,7 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    background: var(--background-white);
+    background: var(--surface-primary);
     border-radius: 8px;
     text-decoration: none;
     color: var(--text-dark);

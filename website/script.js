@@ -17,13 +17,13 @@ window.addEventListener('scroll', function() {
     const header = document.querySelector('.header');
     // Get CSS custom properties from the root element
     const rootStyles = getComputedStyle(document.documentElement);
-    const bgWhite = rootStyles.getPropertyValue('--background-white').trim();
+    const surfacePrimary = rootStyles.getPropertyValue('--surface-primary').trim();
 
     if (window.scrollY > 100) {
-        header.style.background = `${bgWhite}f8`; // Add higher opacity (f8 = 97%)
+        header.style.background = `${surfacePrimary}f8`; // Add higher opacity (f8 = 97%)
         header.style.backdropFilter = 'blur(15px)';
     } else {
-        header.style.background = `${bgWhite}f2`; // Add standard opacity (f2 = 95%)
+        header.style.background = `${surfacePrimary}f2`; // Add standard opacity (f2 = 95%)
         header.style.backdropFilter = 'blur(10px)';
     }
 });
@@ -176,7 +176,7 @@ async function loadUpcomingDates() {
 
 function showDateError() {
     const upcomingDatesContainer = document.querySelector('.upcoming-dates');
-    console.log('Showing date loading error message...');
+    console.log('Showing no dates message...');
 
     if (!upcomingDatesContainer) {
         console.error('upcoming-dates container not found');
@@ -190,61 +190,12 @@ function showDateError() {
         </div>
     `;
 
-    console.log('Date error message displayed');
-}
-
-// Embedded dates as backup (update these when CSV changes)
-const embeddedDates = [
-    { date: '30.10.2025', time: '19:00', description: 'Monatliches Treffen' },
-    { date: '27.11.2025', time: '19:00', description: 'Monatliches Treffen' },
-    { date: '18.12.2025', time: '19:00', description: 'Jahresabschluss-Treffen' },
-    { date: '29.01.2026', time: '19:00', description: 'Neujahrs-Treffen' },
-    { date: '26.02.2026', time: '19:00', description: 'Monatliches Treffen' }
-];
-
-// Load dates with embedded backup
-function loadUpcomingDatesWithBackup() {
-    const upcomingDatesContainer = document.querySelector('.upcoming-dates');
-
-    if (!upcomingDatesContainer) {
-        console.warn('upcoming-dates container not found');
-        return;
-    }
-
-    // First try to load from CSV
-    loadUpcomingDates().catch(() => {
-        // If CSV fails, use embedded dates
-        console.log('Using embedded dates as backup');
-
-        const currentDate = new Date();
-        const futureDates = embeddedDates.filter(dateObj => {
-            const [day, month, year] = dateObj.date.split('.');
-            const eventDate = new Date(year, month - 1, day);
-            return eventDate >= currentDate;
-        }).slice(0, 3);
-
-        if (futureDates.length > 0) {
-            upcomingDatesContainer.innerHTML = futureDates.map(dateObj => `
-                <div class="upcoming-date">
-                    <strong>${formatDate(dateObj.date)}</strong>
-                    <span>${dateObj.time} Uhr</span>
-                </div>
-            `).join('');
-        } else {
-            // No future dates in embedded data
-            upcomingDatesContainer.innerHTML = `
-                <div class="upcoming-date" style="text-align: center; opacity: 0.8;">
-                    <strong>📅 Keine kommenden Termine</strong>
-                    <span>Bitte dates.csv aktualisieren</span>
-                </div>
-            `;
-        }
-    });
+    console.log('No dates message displayed');
 }
 
 // Initialize dates when page loads
 document.addEventListener('DOMContentLoaded', function() {
-    loadUpcomingDatesWithBackup();
+    loadUpcomingDates();
 });
 
 // Add some interactivity to contact methods
