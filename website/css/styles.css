@@ -233,7 +233,7 @@ h1, h2, h3, h4, h5, h6 {
     background: var(--gradient);
     color: white;
     padding: 120px 0 80px;
-    margin-top: 80px;
+    margin-top: 75px;
 }
 
 .hero .container {
