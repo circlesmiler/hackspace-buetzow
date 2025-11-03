@@ -475,7 +475,12 @@ h6 {
     overflow: hidden;
 }
 
-.activity-item:hover, .activity-item:focus-visible,
+.activity-item:hover, .activity-item:focus-visible {
+    border-color: var(--accent-color);
+    box-shadow: 0 8px 30px rgba(0, 212, 255, 0.12), 0 4px 15px rgba(0,0,0,0.2);
+    transform: translateY(-4px) scale(1.025);
+}
+
 .activity-item.active {
     border-color: var(--accent-color);
     box-shadow: 0 8px 30px rgba(0, 212, 255, 0.12), 0 4px 15px rgba(0,0,0,0.2);
@@ -496,9 +501,25 @@ h6 {
     pointer-events: none;
 }
 
-.activity-item:hover::before, .activity-item:focus-visible::before,
+.activity-item:hover::before, .activity-item:focus-visible::before {
+    opacity: 1;
+}
+
 .activity-item.active::before {
     opacity: 1;
+}
+
+/* Disable hover effects on touch devices to prevent sticky states */
+@media (hover: none) {
+    .activity-item:hover, .activity-item:focus-visible {
+        border-color: var(--border-color);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transform: none;
+    }
+
+    .activity-item:hover::before, .activity-item:focus-visible::before {
+        opacity: 0;
+    }
 }
 
 .activity-item > * {
