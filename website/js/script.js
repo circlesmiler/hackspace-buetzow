@@ -1,3 +1,52 @@
+// Only one .activity-item is active at a time, cycling every 2s
+document.addEventListener('DOMContentLoaded', function () {
+    const activityItems = document.querySelectorAll('.activity-item');
+    if (activityItems.length === 0) return;
+    let current = 0;
+    let intervalId = null;
+    let paused = false;
+
+    function activateNext() {
+        activityItems.forEach((item, idx) => {
+            item.classList.toggle('active', idx === current);
+        });
+        current = (current + 1) % activityItems.length;
+    }
+
+    function clearActive() {
+        activityItems.forEach(item => item.classList.remove('active'));
+    }
+
+    function startInterval() {
+        if (intervalId) clearInterval(intervalId);
+        intervalId = setInterval(activateNext, 2000);
+    }
+
+    function stopInterval() {
+        if (intervalId) clearInterval(intervalId);
+        intervalId = null;
+    }
+
+    // Pause on hover, resume on mouse leave
+    activityItems.forEach((item, idx) => {
+        item.addEventListener('mouseenter', () => {
+            paused = true;
+            stopInterval();
+            clearActive();
+        });
+        item.addEventListener('mouseleave', () => {
+            if (paused) {
+                paused = false;
+                current = idx; // resume from the hovered item
+                activateNext();
+                startInterval();
+            }
+        });
+    });
+
+    activateNext();
+    startInterval();
+});
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -50,11 +99,25 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Mobile menu toggle (if needed in future)
+// Mobile menu toggle
 function toggleMobileMenu() {
     const nav = document.querySelector('.nav');
     nav.classList.toggle('mobile-open');
 }
+
+// Close mobile menu when clicking on navigation links
+document.addEventListener('DOMContentLoaded', function() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const nav = document.querySelector('.nav');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (nav.classList.contains('mobile-open')) {
+                nav.classList.remove('mobile-open');
+            }
+        });
+    });
+});
 
 // Update next meeting info in the main schedule card
 function updateNextMeetingInfo(nextDate) {

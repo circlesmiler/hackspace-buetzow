@@ -73,27 +73,46 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(26, 29, 42, 0.6); /* Semi-transparent overlay */
+    background: rgba(26, 29, 42, 0.6);
+    /* Semi-transparent overlay */
     z-index: -1;
     pointer-events: none;
 }
 
 /* Color Palette - Updated for new background */
 :root {
-    --primary-color: #2a2d3a;        /* Deep Blue-Anthracite */
-    --primary-dark: #1a1d2a;         /* Darker Deep Blue */
-    --secondary-color: #3d2a5c;      /* Deep Violet */
-    --accent-color: #00d4ff;         /* Neon Blue/Turquoise */
-    --accent-secondary: #ff0080;     /* Neon Magenta */
-    --accent-tertiary: #00ffcc;      /* Bright Turquoise */
-    --text-dark: #f0f2f5;           /* Light text for dark theme */
-    --text-medium: #c0c5d0;         /* Medium light text with blue tint */
-    --text-light: #9ca3af;          /* Lighter text */
-    --background-light: #252836;    /* Dark background alternative with blue tint */
-    --surface-primary: #1e2030;     /* Primary surface/card background with blue tint */
-    --surface-secondary: #2d1b3d;   /* Violet-tinted surface */
-    --border-color: #404a5c;        /* Dark borders with blue tint */
-    --glow-neon: 0 0 20px rgba(0, 212, 255, 0.3); /* Neon glow effect */
+    --header-height: 77px;
+    /* Header height for scroll offset */
+    --animation-translate: 30px;
+    /* Animation translation distance for fade-in effect */
+    --primary-color: #2a2d3a;
+    /* Deep Blue-Anthracite */
+    --primary-dark: #1a1d2a;
+    /* Darker Deep Blue */
+    --secondary-color: #3d2a5c;
+    /* Deep Violet */
+    --accent-color: #00d4ff;
+    /* Neon Blue/Turquoise */
+    --accent-secondary: #ff0080;
+    /* Neon Magenta */
+    --accent-tertiary: #00ffcc;
+    /* Bright Turquoise */
+    --text-dark: #f0f2f5;
+    /* Light text for dark theme */
+    --text-medium: #c0c5d0;
+    /* Medium light text with blue tint */
+    --text-light: #9ca3af;
+    /* Lighter text */
+    --background-light: #252836;
+    /* Dark background alternative with blue tint */
+    --surface-primary: #1e2030;
+    /* Primary surface/card background with blue tint */
+    --surface-secondary: #2d1b3d;
+    /* Violet-tinted surface */
+    --border-color: #404a5c;
+    /* Dark borders with blue tint */
+    --glow-neon: 0 0 20px rgba(0, 212, 255, 0.3);
+    /* Neon glow effect */
     --gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     --gradient-neon: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-secondary) 100%);
 }
@@ -141,7 +160,12 @@ a:focus {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     color: var(--text-dark);
     font-weight: 600;
 }
@@ -204,12 +228,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .logo-sub {
-    font-size: 0.85rem;
-    font-weight: 400;
-    color: var(--text-medium);
+    font-family: 'Roboto Mono', 'Courier New', 'Monaco', monospace;
+    font-size: 0.9rem;
+    color: var(--accent-secondary);
     margin: 0;
     margin-top: -2px;
-    opacity: 0.8;
+    text-shadow:
+        0 0 5px var(--accent-secondary),
+        0 0 10px var(--accent-secondary),
+        0 0 15px var(--accent-secondary),
+        0 0 20px var(--accent-secondary);
 }
 
 .nav {
@@ -233,7 +261,7 @@ h1, h2, h3, h4, h5, h6 {
     background: var(--gradient);
     color: white;
     padding: 120px 0 80px;
-    margin-top: 75px;
+    margin-top: var(--header-height);
 }
 
 .hero .container {
@@ -337,7 +365,13 @@ h1, h2, h3, h4, h5, h6 {
 /* Sections */
 .section {
     padding: 80px 0;
-    scroll-margin-top: 100px; /* Offset for fixed header */
+    scroll-margin-top: var(--header-height);
+    /* Offset for fixed header */
+}
+
+/* Apply scroll offset to all anchor targets */
+#about, #activities, #schedule, #contact {
+    scroll-margin-top: var(--header-height);
 }
 
 .section-alt {
@@ -371,9 +405,9 @@ h1, h2, h3, h4, h5, h6 {
     right: 0;
     bottom: 0;
     background: linear-gradient(135deg,
-        rgba(0, 212, 255, 0.05) 0%,
-        rgba(255, 0, 128, 0.05) 50%,
-        rgba(0, 255, 204, 0.05) 100%);
+            rgba(0, 212, 255, 0.05) 0%,
+            rgba(255, 0, 128, 0.05) 50%,
+            rgba(0, 255, 204, 0.05) 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: 0;
@@ -389,7 +423,7 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 1;
 }
 
-.about-card > * {
+.about-card>* {
     position: relative;
     z-index: 1;
 }
@@ -436,6 +470,40 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     border: 1px solid var(--border-color);
     border-left: 4px solid var(--accent-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.activity-item:hover, .activity-item:focus-visible,
+.activity-item.active {
+    border-color: var(--accent-color);
+    box-shadow: 0 8px 30px rgba(0, 212, 255, 0.12), 0 4px 15px rgba(0,0,0,0.2);
+    transform: translateY(-4px) scale(1.025);
+}
+
+.activity-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.08) 0%, rgba(0, 255, 204, 0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.activity-item:hover::before, .activity-item:focus-visible::before,
+.activity-item.active::before {
+    opacity: 1;
+}
+
+.activity-item > * {
+    position: relative;
+    z-index: 1;
 }
 
 .activity-item h3 {
@@ -489,7 +557,8 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1rem;
 }
 
-.schedule-time, .schedule-location {
+.schedule-time,
+.schedule-location {
     color: var(--text-medium);
     margin-bottom: 0.5rem;
 }
@@ -543,7 +612,8 @@ h1, h2, h3, h4, h5, h6 {
     gap: 4rem;
 }
 
-.contact-info h3, .contact-form h3 {
+.contact-info h3,
+.contact-form h3 {
     margin-bottom: 1.5rem;
     color: var(--text-dark);
 }
@@ -613,15 +683,17 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 0.5rem;
 }
 
-.footer-main p, .footer-info p {
+.footer-main p,
+.footer-info p {
     opacity: 0.8;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
     .header-content {
-        flex-direction: column;
-        gap: 1rem;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
     }
 
     .nav {
@@ -641,7 +713,8 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 2rem;
     }
 
-    .about-grid, .activities-grid {
+    .about-grid,
+    .activities-grid {
         grid-template-columns: 1fr;
     }
 
@@ -819,14 +892,74 @@ html {
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(var(--animation-translate));
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
+/* Hide elements that will be animated until they get the fade-in-up class */
+.about-card:not(.fade-in-up),
+.activity-item:not(.fade-in-up),
+.schedule-card:not(.fade-in-up),
+.contact-info:not(.fade-in-up),
+.contact-form:not(.fade-in-up) {
+    opacity: 0;
+    transform: translateY(var(--animation-translate));
+}
+
 .fade-in-up {
     animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Mobile Menu Styles */
+.mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    gap: 4px;
+}
+
+.mobile-menu-btn span {
+    width: 25px;
+    height: 3px;
+    background: var(--accent-color);
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: flex;
+    }
+
+    .nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--surface-primary);
+        flex-direction: column;
+        padding: 1rem 0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav.mobile-open {
+        display: flex;
+    }
+
+    .nav-link {
+        padding: 0.75rem 2rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-link:last-child {
+        border-bottom: none;
+    }
 }
