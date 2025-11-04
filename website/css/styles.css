@@ -821,9 +821,10 @@ h6 {
 
 .contact-info {
     background: var(--background-light);
-    padding: 1.5rem;
+    padding: 1.2rem;
     border-radius: 10px;
     border-left: 4px solid var(--accent-color);
+    margin-bottom: 1.5rem;
 }
 
 .placeholder-note {
