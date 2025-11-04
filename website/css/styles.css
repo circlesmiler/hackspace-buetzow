@@ -222,7 +222,7 @@ h6 {
 .logo-main {
     font-family: 'Roboto Mono', 'Courier New', 'Monaco', monospace;
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 400;
     color: var(--accent-color);
     line-height: 1;
     margin: 0;
@@ -247,6 +247,7 @@ h6 {
 .logo-sub {
     font-family: 'Roboto Mono', 'Courier New', 'Monaco', monospace;
     font-size: 0.9rem;
+    font-weight: 400;
     color: var(--accent-secondary);
     margin: 0;
     margin-top: -2px;
