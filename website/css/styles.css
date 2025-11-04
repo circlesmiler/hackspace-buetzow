@@ -79,6 +79,15 @@ body::before {
     pointer-events: none;
 }
 
+@media (max-width: 480px) {
+    p {
+        font-size: 1.12rem;
+        font-weight: 500;
+        line-height: 1.7;
+        letter-spacing: 0.01em;
+    }
+}
+
 /* Color Palette - Updated for new background */
 :root {
     --header-height: 77px;
