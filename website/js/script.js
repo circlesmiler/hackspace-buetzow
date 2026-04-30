@@ -186,12 +186,13 @@ async function loadUpcomingDates() {
             return { date: date.trim(), time: time.trim(), description: description.trim() };
         });
 
-        // Filter future dates
-        const currentDate = new Date();
+        // Filter upcoming dates by calendar day (includes all events on today's date)
+        const now = new Date();
+        const todayDateOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         const futureDates = dates.filter(dateObj => {
             const [day, month, year] = dateObj.date.split('.');
             const eventDate = new Date(year, month - 1, day);
-            return eventDate >= currentDate;
+            return eventDate >= todayDateOnly;
         });
 
         console.log('Future dates found:', futureDates);
