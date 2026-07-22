@@ -257,9 +257,34 @@ function showDateError() {
     console.log('No dates message displayed');
 }
 
+// Handle announcement banners with hide-after dates
+function handleAnnouncementBanners() {
+    const banners = document.querySelectorAll('[data-hide-after]');
+
+    banners.forEach(banner => {
+        const hideAfterStr = banner.getAttribute('data-hide-after');
+
+        if (!hideAfterStr) return;
+
+        // Parse the date in format DD.MM.YYYY
+        const [day, month, year] = hideAfterStr.split('.');
+        const hideAfterDate = new Date(year, month - 1, day);
+
+        // Get today's date without time
+        const today = new Date();
+        const todayDateOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+        // Hide the banner if today is after the hide-after date
+        if (todayDateOnly > hideAfterDate) {
+            banner.style.display = 'none';
+        }
+    });
+}
+
 // Initialize dates when page loads
 document.addEventListener('DOMContentLoaded', function() {
     loadUpcomingDates();
+    handleAnnouncementBanners();
 });
 
 // Add some interactivity to contact methods
